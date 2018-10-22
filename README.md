@@ -1,2 +1,4 @@
 # whoi-repo
-SWC at WHOI
+Software Carpentry at WHOI
+
+Here is some new text
