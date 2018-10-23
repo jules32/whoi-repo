@@ -42,7 +42,9 @@ c(nrow(gapminder), ncol(gapminder))
 
 ```
 
-## Dplyr!
+# The `dplyr` package!
+
+## `filter() subsets by observation (row)
 
 ```{r}
 # filter by rows
@@ -58,6 +60,8 @@ mean(sweden) # error: argument is not numeric or logical: returning NA[1] NA
 
 ```
 
+## `select()` subsets by variable (column)
+
 ```{r}
 # select by columns
 select(gapminder, year, lifeExp) # select only these columns
@@ -69,7 +73,7 @@ gap_cambodia2 <- select(gap_cambodia, -continent, -lifeExp)
 
 ```
 
-The pipe operator will change your life
+## The pipe operator `%>%` will change your analytical life
 
 ```{r}
 # this:
@@ -87,6 +91,8 @@ gap_cambodia <- gapminder %>%
 
 ```
 
+## `mutate()` adds new columns to your dataframe
+
 ```{r}
 # mutate adds new variables
 gapminder %>% 
@@ -101,15 +107,18 @@ gapminder %>%
 ## Challenge:
 # Find the maximum gdpPerCap of Egypt and Vietnam. Create a new column. (I want just one number that is the max of those two countries) Hint: max()
 
+## Answer: 
+# this...
 gapminder %>%
   filter(country %in% c("Egypt", "Vietnam")) %>%
   mutate(gdp = pop * gdpPercap) %>%
   mutate(max_gdp = max(gdp))
 
+#...is the same as this
 gapminder %>%
   filter(country %in% c("Egypt", "Vietnam")) %>%
   mutate(gdp = pop * gdpPercap, 
-         max_gdp = max(gdp))
+         max_gdp = max(gdp))      # <------ you don't have to repeat `mutate`
 
 ```
 
