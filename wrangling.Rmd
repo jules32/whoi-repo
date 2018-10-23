@@ -184,5 +184,34 @@ lj2 <- left_join(co2, gap_2007, by = "country")
 ```
 
 
+Tidyr
+```{r}
+gap_wide <- readr::read_csv('https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/gapminder_wide.csv')
+
+gap_long <- gap_wide %>% 
+  gather(key   = obstype_year,
+         value = obs_values,
+         -continent, -country) %>%
+  separate(obstype_year,
+           into = c('obs_type','year'),
+           sep = "_",
+           convert = TRUE)
+
+#Using gap_long, calculate and plot the the mean life expectancy for each continent over time from 1982 to 2007. Give your plot a title and assign x and y labels. Hint: use the dplyr::group_by() and dplyr::summarize() functions.
+
+continents <- gap_long %>% 
+  filter(obs_type == "lifeExp", 
+         year > 1980) %>% 
+  group_by(continent, year) %>% 
+  summarize(mean_le = mean(obs_values))
+
+ggplot(data = continents, aes(x = year, y = mean_le, color = continent)) + 
+  geom_line() +
+  labs(title = "Mean life expectancy",
+       x = "Year",
+       y = "Age (years)") 
+
+```
+
 
 
